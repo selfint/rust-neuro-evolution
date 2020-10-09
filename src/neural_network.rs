@@ -3,9 +3,9 @@ pub struct NeuralNetwork {
 }
 
 impl NeuralNetwork {
-    pub fn new(dims: Vec<usize>) -> NeuralNetwork {
+    pub fn new(dims: &Vec<usize>) -> NeuralNetwork {
         NeuralNetwork {
-            dims
+            dims: dims.clone()
         }
     }
 }
