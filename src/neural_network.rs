@@ -1,15 +1,15 @@
 use rand::Rng;
 
 pub struct NeuralNetwork {
-    dims: Vec<usize>,
-    weights: Vec<Vec<Vec<f32>>>
+    weights: Vec<Vec<Vec<f32>>>,
+    biases: Vec<Vec<f32>>
 }
 
 impl NeuralNetwork {
     pub fn new(dims: &Vec<usize>) -> NeuralNetwork {
         NeuralNetwork {
-            dims: dims.clone(),
-            weights: generate_random_weights(dims)
+            weights: generate_random_weights(dims),
+            biases: generate_random_biases(dims)
         }
     }
 }
