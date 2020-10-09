@@ -37,6 +37,24 @@ fn generate_random_weights(dims: &Vec<usize>) -> Vec<Vec<Vec<f32>>> {
     random_weights
 }
 
+fn generate_random_biases(dims: &Vec<usize>) -> Vec<Vec<f32>> {
+    let mut rng = rand::thread_rng();
+
+    let mut random_biases: Vec<Vec<f32>> = vec![];
+
+    for &layer_dim in dims {
+        let mut layer_biases = vec![];
+
+        for _ in 0..layer_dim {
+            layer_biases.push(rng.gen_range(-0.1, 1.0));
+        }
+
+        random_biases.push(layer_biases);
+    }
+
+    random_biases
+}
+
 #[cfg(test)]
 mod tests {
     #[test]
@@ -58,5 +76,17 @@ mod tests {
                 assert_eq!(prev_dim, node_weights.len());
             }
         }
+    }
+
+    #[test]
+    fn random_biases_have_correct_dims() {
+
+        let dims = vec![2, 3, 1];
+        let random_biases: Vec<Vec<f32>> = super::generate_random_biases(&dims);
+
+        for (index, &dim) in dims.iter().enumerate() {
+            assert_eq!(dim, random_biases[index].len());
+        }
+
     }
 }
