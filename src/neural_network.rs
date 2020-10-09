@@ -44,7 +44,7 @@ mod tests {
 
         // must have at least 2 layers
         let dims = vec![2, 3, 1];
-        let random_weights = super::generate_random_weights(&dims);
+        let random_weights: Vec<Vec<Vec<f32>>> = super::generate_random_weights(&dims);
 
         for i in 1..dims.len() {
             let current_dim = dims[i];
