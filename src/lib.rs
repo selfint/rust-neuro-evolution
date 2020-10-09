@@ -6,6 +6,7 @@ mod tests {
 
     #[test]
     fn neural_network_exists() {
-        let x = NeuralNetwork::new();
+        let network_dims = vec![2, 3, 1];
+        let x = NeuralNetwork::new(network_dims);
     }
 }
