@@ -27,6 +27,18 @@ impl NeuralNetwork {
         }
     }
 
+    pub fn total_weights(&self) -> u32 {
+        self.weights.iter()
+            .map(|layer_weights| {
+                layer_weights.iter().map(Vec::len).sum::<usize>()
+            })
+            .sum::<usize>() as u32
+    }
+
+    pub fn total_biases(&self) -> u32 {
+        self.biases.iter().map(Vec::len).sum::<usize>() as u32
+    }
+
     pub fn feed_forward(&self, input: &Vec<f32>) -> Vec<f32> {
         if self.inputs != input.len() {
             panic!(format!(
