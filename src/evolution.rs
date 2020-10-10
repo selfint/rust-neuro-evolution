@@ -26,7 +26,7 @@ pub fn crossover(nn1: &NeuralNetwork, nn2: &NeuralNetwork) -> NeuralNetwork {
         inputs: nn1.inputs,
         outputs: nn1.outputs,
         biases: nn3_biases,
-        weights: nn3_weights
+        weights: nn3_weights,
     };
 
     nn3

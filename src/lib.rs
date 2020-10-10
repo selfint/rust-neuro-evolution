@@ -62,14 +62,19 @@ mod tests {
             evolution::mutate(&mut nn);
             let mutated_weights = nn.weights.clone();
 
-            let changed_weights = networks_weights_diff_count(&nn_weights, &mutated_weights).unwrap();
+            let changed_weights =
+                networks_weights_diff_count(&nn_weights, &mutated_weights).unwrap();
 
             assert_eq!(1, changed_weights);
         }
 
-        fn networks_weights_diff_count(nn1_network_weights: &Vec<Vec<Vec<f32>>>, nn2_network_weights: &Vec<Vec<Vec<f32>>>) -> Result<u32, String> {
+        fn networks_weights_diff_count(
+            nn1_network_weights: &Vec<Vec<Vec<f32>>>,
+            nn2_network_weights: &Vec<Vec<Vec<f32>>>,
+        ) -> Result<u32, String> {
             let mut diff_counter = 0;
-            for (nn1_layer, nn2_layer) in nn1_network_weights.iter().zip(nn2_network_weights.iter()) {
+            for (nn1_layer, nn2_layer) in nn1_network_weights.iter().zip(nn2_network_weights.iter())
+            {
                 if nn1_layer.len() != nn2_layer.len() {
                     return Err("Network dim mismatch".to_owned());
                 }
@@ -90,7 +95,10 @@ mod tests {
             Ok(diff_counter)
         }
 
-        fn networks_bias_diff_count(nn1_network_biases: &Vec<Vec<f32>>, nn2_network_biases: &Vec<Vec<f32>>) -> Result<u32, String> {
+        fn networks_bias_diff_count(
+            nn1_network_biases: &Vec<Vec<f32>>,
+            nn2_network_biases: &Vec<Vec<f32>>,
+        ) -> Result<u32, String> {
             let mut diff_counter = 0;
             for (nn1_layer, nn2_layer) in nn1_network_biases.iter().zip(nn2_network_biases.iter()) {
                 if nn1_layer.len() != nn2_layer.len() {
@@ -124,21 +132,29 @@ mod tests {
 
             let nn3: NeuralNetwork = evolution::crossover(&nn1, &nn2);
 
-            let nn1_weights_diff_count = networks_weights_diff_count(&nn3.weights, &nn1.weights).unwrap();
-            let nn2_weights_diff_count = networks_weights_diff_count(&nn3.weights, &nn2.weights).unwrap();
+            let nn1_weights_diff_count =
+                networks_weights_diff_count(&nn3.weights, &nn1.weights).unwrap();
+            let nn2_weights_diff_count =
+                networks_weights_diff_count(&nn3.weights, &nn2.weights).unwrap();
 
-            let parent_nn_weight_diff_count = networks_weights_diff_count(&nn1.weights, &nn2.weights).unwrap();
+            let parent_nn_weight_diff_count =
+                networks_weights_diff_count(&nn1.weights, &nn2.weights).unwrap();
             assert_ne!(0, parent_nn_weight_diff_count);
-            assert_eq!(nn3.total_weights(), nn1_weights_diff_count + nn2_weights_diff_count);
+            assert_eq!(
+                nn3.total_weights(),
+                nn1_weights_diff_count + nn2_weights_diff_count
+            );
 
             let nn1_biases_diff_count = networks_bias_diff_count(&nn3.biases, &nn1.biases).unwrap();
             let nn2_biases_diff_count = networks_bias_diff_count(&nn3.biases, &nn2.biases).unwrap();
 
-            let parent_nn_biases_diff_count = networks_bias_diff_count(&nn1.biases, &nn2.biases).unwrap();
+            let parent_nn_biases_diff_count =
+                networks_bias_diff_count(&nn1.biases, &nn2.biases).unwrap();
             assert_ne!(0, parent_nn_biases_diff_count);
-            assert_eq!(nn3.total_biases(), nn1_biases_diff_count + nn2_biases_diff_count);
-
-
+            assert_eq!(
+                nn3.total_biases(),
+                nn1_biases_diff_count + nn2_biases_diff_count
+            );
         }
     }
 }

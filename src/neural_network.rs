@@ -28,10 +28,9 @@ impl NeuralNetwork {
     }
 
     pub fn total_weights(&self) -> u32 {
-        self.weights.iter()
-            .map(|layer_weights| {
-                layer_weights.iter().map(Vec::len).sum::<usize>()
-            })
+        self.weights
+            .iter()
+            .map(|layer_weights| layer_weights.iter().map(Vec::len).sum::<usize>())
             .sum::<usize>() as u32
     }
 
