@@ -1,10 +1,11 @@
 use rand::Rng;
+use rand::prelude::ThreadRng;
 
 pub struct NeuralNetwork {
     pub inputs: usize,
     pub outputs: usize,
-    weights: Vec<Vec<Vec<f32>>>,
-    biases: Vec<Vec<f32>>,
+    pub weights: Vec<Vec<Vec<f32>>>,
+    pub biases: Vec<Vec<f32>>,
 }
 
 impl NeuralNetwork {
@@ -65,7 +66,7 @@ fn generate_random_weights(dims: &Vec<usize>) -> Vec<Vec<Vec<f32>>> {
             let mut node_weights: Vec<f32> = vec![];
 
             for _ in 0..prev_dim {
-                node_weights.push(rng.gen_range(-0.1, 0.1));
+                node_weights.push(generate_random_weight(rng));
             }
             layer_weights.push(node_weights);
         }
@@ -85,13 +86,17 @@ fn generate_random_biases(dims: &Vec<usize>) -> Vec<Vec<f32>> {
         let mut layer_biases = vec![];
 
         for _ in 0..layer_dim {
-            layer_biases.push(rng.gen_range(-0.1, 1.0));
+            layer_biases.push(generate_random_weight(rng));
         }
 
         random_biases.push(layer_biases);
     }
 
     random_biases
+}
+
+pub fn generate_random_weight(mut rng: ThreadRng) -> f32 {
+    rng.gen_range(-0.1, 1.0)
 }
 
 #[cfg(test)]

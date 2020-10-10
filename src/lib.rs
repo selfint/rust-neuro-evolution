@@ -1,4 +1,5 @@
 mod neural_network;
+mod evolution;
 
 #[cfg(test)]
 mod tests {
@@ -40,5 +41,35 @@ mod tests {
 
             assert_eq!(1, output.len());
         }
+    }
+    mod evolution_integration_tests {
+        use crate::neural_network::NeuralNetwork;
+        use crate::evolution;
+
+        #[test]
+        fn mutate_changes_one_weight() {
+            let mut nn = NeuralNetwork::new(&vec![2, 4, 3]);
+            let nn_weights = nn.weights.clone();
+            evolution::mutate(&mut nn);
+            let mutated_weights = nn.weights.clone();
+
+            let mut diff_counter = 0;
+            for (orig_layer, mut_layer) in nn_weights.iter().zip(mutated_weights.iter()) {
+                assert_eq!(orig_layer.len(), mut_layer.len());
+
+                for (orig_weights, mut_weights) in orig_layer.iter().zip(mut_layer.iter()) {
+                    assert_eq!(orig_weights.len(), mut_weights.len());
+
+                    for (&orig_weight, &mut_weight) in orig_weights.iter().zip(mut_weights.iter()) {
+                        if orig_weight != mut_weight {
+                            diff_counter += 1;
+                        }
+                    }
+                }
+            }
+
+            assert_eq!(1, diff_counter);
+        }
+
     }
 }
