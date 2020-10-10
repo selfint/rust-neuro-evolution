@@ -89,3 +89,13 @@ fn crossover_weights(nn1: &NeuralNetwork, nn2: &NeuralNetwork) -> Vec<Vec<Vec<f3
 
     nn3_network_weights
 }
+
+pub fn spawn_generation(amount: usize, dims: &Vec<usize>) -> Vec<NeuralNetwork> {
+    let mut generation = vec![];
+
+    for _ in 0..amount {
+        generation.push(NeuralNetwork::new(dims));
+    }
+
+    generation
+}
