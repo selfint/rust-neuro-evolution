@@ -18,5 +18,19 @@ mod tests {
             NeuralNetwork::new(&network_dims);
         }
 
+        #[test]
+        #[should_panic]
+        fn constructor_panics_on_not_enough_layers() {
+            let network_dims = vec![2];
+            NeuralNetwork::new(&network_dims);
+        }
+
+        #[test]
+        #[should_panic]
+        fn feed_forward_panics_on_wrong_input_size() {
+            let nn = NeuralNetwork::new(&vec![3, 10, 1]);
+
+            nn.feed_forward(&vec![1.0]);
+        }
     }
 }

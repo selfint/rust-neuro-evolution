@@ -9,12 +9,33 @@ pub struct NeuralNetwork {
 
 impl NeuralNetwork {
     pub fn new(dims: &Vec<usize>) -> NeuralNetwork {
+        if dims.len() < 2 {
+            panic!(format!(
+                "Neural network dims must have at least 2 layers, got {} layers",
+                dims.len()
+            ));
+        }
+
         NeuralNetwork {
             inputs: dims[0],
-            outputs: dims[-1],
+            outputs: *dims.last().unwrap(),
             weights: generate_random_weights(dims),
             biases: generate_random_biases(dims),
         }
+    }
+
+    pub fn feed_forward(&self, input: &Vec<f32>) -> Vec<f32> {
+        if self.inputs != input.len() {
+            panic!(format!(
+                "Given input has length {}, while network expects input with length {}",
+                input.len(),
+                self.inputs
+            ));
+        }
+
+        let mut output = vec![];
+
+        output
     }
 }
 
