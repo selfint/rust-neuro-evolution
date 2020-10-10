@@ -75,7 +75,7 @@ mod tests {
 
         #[test]
         #[should_panic(expected = "Can't crossover networks with different dimensions")]
-        fn crossover_uses_genes_from_both_parents() {
+        fn crossover_panics_on_network_dims_missmatch() {
             let nn1 = NeuralNetwork::new(&vec![2, 3, 1]);
             let nn2 = NeuralNetwork::new(&vec![1, 4, 2]);
 
