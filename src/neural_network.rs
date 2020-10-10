@@ -33,9 +33,22 @@ impl NeuralNetwork {
             ));
         }
 
-        let mut output = vec![];
+        let mut prev_output = input.clone();
+        for (layer_weights, layer_biases) in self.weights.iter().zip(self.biases.iter()) {
+            let mut output = vec![];
+            for (node_weights, node_bias) in layer_weights.iter().zip(layer_biases) {
+                let mut node_output = *node_bias;
+                for (node_weight, prev_node_output) in node_weights.iter().zip(prev_output.iter()) {
+                    node_output += node_weight * prev_node_output;
+                }
 
-        output
+                output.push(node_output);
+            }
+
+            prev_output = output;
+        }
+
+        prev_output
     }
 }
 
@@ -44,8 +57,8 @@ fn generate_random_weights(dims: &Vec<usize>) -> Vec<Vec<Vec<f32>>> {
 
     let mut random_weights: Vec<Vec<Vec<f32>>> = vec![];
 
-    let next_dims = &dims[1..];
-    for (&prev_dim, &current_dim) in dims.iter().zip(next_dims.iter()) {
+    let next_dims = dims.iter().skip(1);
+    for (&prev_dim, &current_dim) in dims.iter().zip(next_dims) {
         let mut layer_weights: Vec<Vec<f32>> = vec![];
 
         for _ in 0..current_dim {
@@ -67,7 +80,8 @@ fn generate_random_biases(dims: &Vec<usize>) -> Vec<Vec<f32>> {
 
     let mut random_biases: Vec<Vec<f32>> = vec![];
 
-    for &layer_dim in dims {
+    // first layer is for inputs only, so no biases
+    for &layer_dim in dims.iter().skip(1) {
         let mut layer_biases = vec![];
 
         for _ in 0..layer_dim {
@@ -107,9 +121,8 @@ mod tests {
         let dims = vec![2, 3, 1];
         let random_biases: Vec<Vec<f32>> = super::generate_random_biases(&dims);
 
-        for (index, &dim) in dims.iter().enumerate() {
-            assert_eq!(dim, random_biases[index].len());
-        }
+        assert_eq!(3, random_biases[0].len());
+        assert_eq!(1, random_biases[1].len());
     }
 
     #[test]

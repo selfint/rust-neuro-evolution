@@ -32,5 +32,13 @@ mod tests {
 
             nn.feed_forward(&vec![1.0]);
         }
+
+        #[test]
+        fn feed_forward_gives_correct_output_length() {
+            let nn = NeuralNetwork::new(&vec![2, 1, 1]);
+            let output: Vec<f32> = nn.feed_forward(&vec![1.0, 0.0]);
+
+            assert_eq!(1, output.len());
+        }
     }
 }
