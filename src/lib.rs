@@ -164,7 +164,7 @@ mod tests {
         }
 
         #[test]
-        fn test_spawn_generation_is_correct_amount() {
+        fn spawn_generation_is_correct_amount() {
             let network_dims = vec![2, 3, 1];
             let total_networks: usize = 10;
             let mut networks: Vec<NeuralNetwork> = evolution::spawn_generation(total_networks, &network_dims);
