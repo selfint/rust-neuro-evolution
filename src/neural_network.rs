@@ -1,5 +1,5 @@
-use rand::Rng;
 use rand::prelude::ThreadRng;
+use rand::Rng;
 
 pub struct NeuralNetwork {
     pub inputs: usize,

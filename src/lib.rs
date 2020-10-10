@@ -1,5 +1,5 @@
-mod neural_network;
 mod evolution;
+mod neural_network;
 
 #[cfg(test)]
 mod tests {
@@ -27,7 +27,9 @@ mod tests {
         }
 
         #[test]
-        #[should_panic(expected = "Given input has length 1, while network expects input with length 3")]
+        #[should_panic(
+            expected = "Given input has length 1, while network expects input with length 3"
+        )]
         fn feed_forward_panics_on_wrong_input_size() {
             let nn = NeuralNetwork::new(&vec![3, 10, 1]);
 
@@ -43,8 +45,8 @@ mod tests {
         }
     }
     mod evolution_integration_tests {
-        use crate::neural_network::NeuralNetwork;
         use crate::evolution;
+        use crate::neural_network::NeuralNetwork;
 
         #[test]
         fn mutate_changes_one_weight() {
@@ -71,5 +73,13 @@ mod tests {
             assert_eq!(1, diff_counter);
         }
 
+        #[test]
+        #[should_panic(expected = "Can't crossover networks with different dimensions")]
+        fn crossover_uses_genes_from_both_parents() {
+            let nn1 = NeuralNetwork::new(&vec![2, 3, 1]);
+            let nn2 = NeuralNetwork::new(&vec![1, 4, 2]);
+
+            let nn3: NeuralNetwork = evolution::crossover(&nn1, &nn2);
+        }
     }
 }
