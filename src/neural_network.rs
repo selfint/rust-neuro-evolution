@@ -1,6 +1,8 @@
 use rand::Rng;
 
 pub struct NeuralNetwork {
+    pub inputs: usize,
+    pub outputs: usize,
     weights: Vec<Vec<Vec<f32>>>,
     biases: Vec<Vec<f32>>,
 }
@@ -8,6 +10,8 @@ pub struct NeuralNetwork {
 impl NeuralNetwork {
     pub fn new(dims: &Vec<usize>) -> NeuralNetwork {
         NeuralNetwork {
+            inputs: dims[0],
+            outputs: dims[-1],
             weights: generate_random_weights(dims),
             biases: generate_random_biases(dims),
         }
@@ -85,5 +89,14 @@ mod tests {
         for (index, &dim) in dims.iter().enumerate() {
             assert_eq!(dim, random_biases[index].len());
         }
+    }
+
+    #[test]
+    fn network_input_outputs_are_correct() {
+        let dims = vec![1, 3, 5, 4];
+        let nn = super::NeuralNetwork::new(&dims);
+
+        assert_eq!(1, nn.inputs);
+        assert_eq!(4, nn.outputs);
     }
 }
