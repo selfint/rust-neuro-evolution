@@ -55,6 +55,12 @@ mod tests {
             evolution::mutate(&mut nn);
             let mutated_weights = nn.weights.clone();
 
+            let changed_weights = networks_weights_diff_count(nn_weights, mutated_weights);
+
+            assert_eq!(1, changed_weights);
+        }
+
+        fn networks_weights_diff_count(nn_weights: Vec<Vec<Vec<f32>>>, mutated_weights: Vec<Vec<Vec<f32>>>) -> u32 {
             let mut diff_counter = 0;
             for (orig_layer, mut_layer) in nn_weights.iter().zip(mutated_weights.iter()) {
                 assert_eq!(orig_layer.len(), mut_layer.len());
@@ -69,8 +75,7 @@ mod tests {
                     }
                 }
             }
-
-            assert_eq!(1, diff_counter);
+            diff_counter
         }
 
         #[test]
@@ -80,6 +85,16 @@ mod tests {
             let nn2 = NeuralNetwork::new(&vec![1, 4, 2]);
 
             let nn3: NeuralNetwork = evolution::crossover(&nn1, &nn2);
+        }
+
+        #[test]
+        fn crossover_uses_weights_and_biases_from_both_networks() {
+            let network_dims = vec![2, 3, 1];
+            let nn1 = NeuralNetwork::new(&network_dims);
+            let nn2 = NeuralNetwork::new(&network_dims);
+
+            let nn3: NeuralNetwork = evolution::crossover(&nn1, &nn2);
+
         }
     }
 }
