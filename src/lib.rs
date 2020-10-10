@@ -51,6 +51,7 @@ mod tests {
             assert_eq!(9, nn.total_weights());
         }
     }
+
     mod evolution_integration_tests {
         use crate::evolution;
         use crate::neural_network::NeuralNetwork;
