@@ -2,14 +2,14 @@ use rand::Rng;
 
 pub struct NeuralNetwork {
     weights: Vec<Vec<Vec<f32>>>,
-    biases: Vec<Vec<f32>>
+    biases: Vec<Vec<f32>>,
 }
 
 impl NeuralNetwork {
     pub fn new(dims: &Vec<usize>) -> NeuralNetwork {
         NeuralNetwork {
             weights: generate_random_weights(dims),
-            biases: generate_random_biases(dims)
+            biases: generate_random_biases(dims),
         }
     }
 }
@@ -59,16 +59,15 @@ fn generate_random_biases(dims: &Vec<usize>) -> Vec<Vec<f32>> {
 mod tests {
     #[test]
     fn random_weights_have_correct_dims() {
-
         // must have at least 2 layers
         let dims = vec![2, 3, 1];
         let random_weights: Vec<Vec<Vec<f32>>> = super::generate_random_weights(&dims);
 
         for i in 1..dims.len() {
             let current_dim = dims[i];
-            let prev_dim = dims[i-1];
+            let prev_dim = dims[i - 1];
 
-            let current_weights = &random_weights[i-1];
+            let current_weights = &random_weights[i - 1];
 
             assert_eq!(current_dim, current_weights.len());
 
@@ -80,13 +79,11 @@ mod tests {
 
     #[test]
     fn random_biases_have_correct_dims() {
-
         let dims = vec![2, 3, 1];
         let random_biases: Vec<Vec<f32>> = super::generate_random_biases(&dims);
 
         for (index, &dim) in dims.iter().enumerate() {
             assert_eq!(dim, random_biases[index].len());
         }
-
     }
 }
