@@ -1,6 +1,7 @@
+use rand::Rng;
+
 use crate::neural_network;
 use crate::neural_network::NeuralNetwork;
-use rand::Rng;
 
 pub fn mutate(nn: &mut NeuralNetwork) {
     let mut rng = rand::thread_rng();
