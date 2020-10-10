@@ -4,6 +4,7 @@ use rand::prelude::ThreadRng;
 pub struct NeuralNetwork {
     pub inputs: usize,
     pub outputs: usize,
+    pub dims: Vec<usize>,
     pub weights: Vec<Vec<Vec<f32>>>,
     pub biases: Vec<Vec<f32>>,
 }
@@ -20,6 +21,7 @@ impl NeuralNetwork {
         NeuralNetwork {
             inputs: dims[0],
             outputs: *dims.last().unwrap(),
+            dims: dims.clone(),
             weights: generate_random_weights(dims),
             biases: generate_random_biases(dims),
         }
