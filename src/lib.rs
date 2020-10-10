@@ -121,7 +121,7 @@ mod tests {
             let nn1 = NeuralNetwork::new(&vec![2, 3, 1]);
             let nn2 = NeuralNetwork::new(&vec![1, 4, 2]);
 
-            let nn3: NeuralNetwork = evolution::crossover(&nn1, &nn2);
+            evolution::crossover(&nn1, &nn2);
         }
 
         #[test]

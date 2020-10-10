@@ -67,7 +67,7 @@ impl NeuralNetwork {
 }
 
 fn generate_random_weights(dims: &Vec<usize>) -> Vec<Vec<Vec<f32>>> {
-    let mut rng = rand::thread_rng();
+    let rng = rand::thread_rng();
 
     let mut random_weights: Vec<Vec<Vec<f32>>> = vec![];
 
@@ -90,7 +90,7 @@ fn generate_random_weights(dims: &Vec<usize>) -> Vec<Vec<Vec<f32>>> {
 }
 
 fn generate_random_biases(dims: &Vec<usize>) -> Vec<Vec<f32>> {
-    let mut rng = rand::thread_rng();
+    let rng = rand::thread_rng();
 
     let mut random_biases: Vec<Vec<f32>> = vec![];
 
