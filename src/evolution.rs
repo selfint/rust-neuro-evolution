@@ -5,7 +5,7 @@ use crate::neural_network;
 use crate::neural_network::NeuralNetwork;
 
 pub fn mutate(nn: &mut NeuralNetwork) {
-    let mut rng = rand::thread_rng();
+    let rng = rand::thread_rng();
 
     if rand::random() {
         mutate_network_weights(nn, rng);
