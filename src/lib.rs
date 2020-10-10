@@ -19,14 +19,14 @@ mod tests {
         }
 
         #[test]
-        #[should_panic]
+        #[should_panic(expected = "Neural network dims must have at least 2 layers, got 1 layers")]
         fn constructor_panics_on_not_enough_layers() {
             let network_dims = vec![2];
             NeuralNetwork::new(&network_dims);
         }
 
         #[test]
-        #[should_panic]
+        #[should_panic(expected = "Given input has length 1, while network expects input with length 3")]
         fn feed_forward_panics_on_wrong_input_size() {
             let nn = NeuralNetwork::new(&vec![3, 10, 1]);
 
