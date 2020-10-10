@@ -1,4 +1,5 @@
 use rand::Rng;
+use rand::rngs::ThreadRng;
 
 use crate::neural_network;
 use crate::neural_network::NeuralNetwork;
@@ -6,11 +7,27 @@ use crate::neural_network::NeuralNetwork;
 pub fn mutate(nn: &mut NeuralNetwork) {
     let mut rng = rand::thread_rng();
 
+    if rand::random() {
+        mutate_network_weights(nn, rng);
+    } else {
+        mutate_network_biases(nn, rng);
+    }
+}
+
+fn mutate_network_weights(nn: &mut NeuralNetwork, mut rng: ThreadRng) {
     let chosen_layer = rng.gen_range(0, nn.weights.len());
     let chosen_node = rng.gen_range(0, nn.weights[chosen_layer].len());
     let chosen_weight = rng.gen_range(0, nn.weights[chosen_layer][chosen_node].len());
 
     nn.weights[chosen_layer][chosen_node][chosen_weight] =
+        neural_network::generate_random_weight(rng);
+}
+
+fn mutate_network_biases(nn: &mut NeuralNetwork, mut rng: ThreadRng) {
+    let chosen_layer = rng.gen_range(0, nn.biases.len());
+    let chosen_node = rng.gen_range(0, nn.biases[chosen_layer].len());
+
+    nn.biases[chosen_layer][chosen_node] =
         neural_network::generate_random_weight(rng);
 }
 

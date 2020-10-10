@@ -56,16 +56,21 @@ mod tests {
         use crate::neural_network::NeuralNetwork;
 
         #[test]
-        fn mutate_changes_one_weight() {
+        fn mutate_changes_one_weight_or_bias() {
             let mut nn = NeuralNetwork::new(&vec![2, 4, 3]);
             let nn_weights = nn.weights.clone();
+            let nn_biases = nn.biases.clone();
+
             evolution::mutate(&mut nn);
+
             let mutated_weights = nn.weights.clone();
+            let mutated_biases = nn.biases.clone();
 
             let changed_weights =
                 networks_weights_diff_count(&nn_weights, &mutated_weights).unwrap();
+            let changed_biases = networks_bias_diff_count(&nn_biases, &mutated_biases).unwrap();
 
-            assert_eq!(1, changed_weights);
+            assert_eq!(1, changed_weights + changed_biases);
         }
 
         fn networks_weights_diff_count(
