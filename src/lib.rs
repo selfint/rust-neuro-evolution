@@ -131,7 +131,7 @@ mod tests {
         }
 
         #[test]
-        fn crossover_uses_weights_and_biases_from_both_networks() {
+        fn crossover_uses_weights_from_both_networks() {
             let network_dims = [2, 3, 1];
             let nn1 = NeuralNetwork::new(&network_dims);
             let nn2 = NeuralNetwork::new(&network_dims);
@@ -150,6 +150,15 @@ mod tests {
                 nn3.total_weights(),
                 nn1_weights_diff_count + nn2_weights_diff_count
             );
+        }
+
+        #[test]
+        fn crossover_uses_biases_from_both_networks() {
+            let network_dims = [2, 3, 1];
+            let nn1 = NeuralNetwork::new(&network_dims);
+            let nn2 = NeuralNetwork::new(&network_dims);
+
+            let nn3: NeuralNetwork = evolution::crossover(&nn1, &nn2);
 
             let nn1_biases_diff_count = networks_bias_diff_count(&nn3.biases, &nn1.biases).unwrap();
             let nn2_biases_diff_count = networks_bias_diff_count(&nn3.biases, &nn2.biases).unwrap();
