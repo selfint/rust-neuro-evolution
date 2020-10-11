@@ -1,6 +1,7 @@
 use rand::prelude::ThreadRng;
 use rand::Rng;
 
+#[derive(Clone)]
 pub struct NeuralNetwork {
     pub inputs: usize,
     pub outputs: usize,

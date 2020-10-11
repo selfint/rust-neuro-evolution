@@ -187,15 +187,79 @@ mod tests {
             let network_dims = [2, 3, 1];
             let total_networks: usize = 4;
             let mutation_rate = 1.0;
+            let survival_rate = 0.5;
             let networks: Vec<NeuralNetwork> =
                 evolution::spawn_generation(total_networks, &network_dims);
 
             let scores = [1.0, 2.0, 3.0, 4.0];
 
             let new_networks: Vec<NeuralNetwork> =
-                evolution::new_generation(&networks, &scores, mutation_rate);
+                evolution::new_generation(&networks, &scores, mutation_rate, survival_rate);
 
             assert_eq!(total_networks, new_networks.len());
+        }
+
+        #[test]
+        fn new_generation_makes_new_networks() {
+            let network_dims = [2, 3, 1];
+            let total_networks: usize = 4;
+            let mutation_rate = 1.0;
+            let survival_rate = 0.0;
+            let networks: Vec<NeuralNetwork> =
+                evolution::spawn_generation(total_networks, &network_dims);
+
+            let scores = [1.0, 2.0, 3.0, 4.0];
+
+            let new_networks: Vec<NeuralNetwork> =
+                evolution::new_generation(&networks, &scores, mutation_rate, survival_rate);
+
+            let mut total_old_networks = 0;
+            for old_network in &networks {
+                for new_network in &new_networks {
+                    let weight_diffs =
+                        networks_weights_diff_count(&old_network.weights, &new_network.weights)
+                            .unwrap();
+                    let bias_diffs =
+                        networks_bias_diff_count(&old_network.biases, &new_network.biases).unwrap();
+
+                    if weight_diffs + bias_diffs == 0 {
+                        total_old_networks += 1;
+                    }
+                }
+            }
+
+            assert_eq!(0, total_old_networks);
+        }
+
+        #[test]
+        fn correct_amount_of_networks_survives() {
+            let network_dims = [2, 3, 1];
+            let total_networks = 4;
+            let mutation_rate = 1.0;
+            let survival_rate = 0.5;
+            let scores = [1.0, 2.0, 3.0, 4.0];
+
+            let networks = evolution::spawn_generation(total_networks, &network_dims);
+
+            let next_generation =
+                evolution::new_generation(&networks, &scores, mutation_rate, survival_rate);
+
+            let mut survivor_count = 0;
+            for old_network in &networks {
+                for new_network in &next_generation {
+                    let weight_diffs =
+                        networks_weights_diff_count(&old_network.weights, &new_network.weights)
+                            .unwrap();
+                    let bias_diffs =
+                        networks_bias_diff_count(&old_network.biases, &new_network.biases).unwrap();
+
+                    if weight_diffs + bias_diffs == 0 {
+                        survivor_count += 1;
+                    }
+                }
+            }
+
+            assert_eq!(2, survivor_count);
         }
     }
 }

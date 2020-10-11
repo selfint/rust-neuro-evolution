@@ -104,6 +104,7 @@ pub fn new_generation(
     old_generation: &[NeuralNetwork],
     fitness_levels: &[f32],
     mutation_rate: f32,
+    survival_rate: f32,
 ) -> Vec<NeuralNetwork> {
     let mut rng = rand::thread_rng();
     let mut gen = vec![];
@@ -115,7 +116,10 @@ pub fn new_generation(
         }
     }
 
-    for _ in 0..old_generation.len() {
+    let total_survivors = (old_generation.len() as f32 * survival_rate).round() as usize;
+    let new_networks = old_generation.len() - total_survivors;
+
+    for _ in 0..new_networks {
         let nn1 = &old_generation[options[rng.gen_range(0, options.len())]];
         let nn2 = &old_generation[options[rng.gen_range(0, options.len())]];
 
@@ -126,6 +130,11 @@ pub fn new_generation(
         }
 
         gen.push(child);
+    }
+
+    // TODO: can we take ownership of survivors instead of cloning?
+    for _ in 0..total_survivors {
+        gen.push(old_generation[options[rng.gen_range(0, options.len())]].clone());
     }
 
     gen
