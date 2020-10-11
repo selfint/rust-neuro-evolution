@@ -167,7 +167,8 @@ mod tests {
         fn spawn_generation_is_correct_amount() {
             let network_dims = vec![2, 3, 1];
             let total_networks: usize = 10;
-            let networks: Vec<NeuralNetwork> = evolution::spawn_generation(total_networks, &network_dims);
+            let networks: Vec<NeuralNetwork> =
+                evolution::spawn_generation(total_networks, &network_dims);
 
             assert_eq!(total_networks, networks.len());
         }
@@ -177,10 +178,13 @@ mod tests {
             let network_dims = vec![2, 3, 1];
             let total_networks: usize = 4;
             let mutation_rate = 1.0;
-            let networks: Vec<NeuralNetwork> = evolution::spawn_generation(total_networks, &network_dims);
+            let networks: Vec<NeuralNetwork> =
+                evolution::spawn_generation(total_networks, &network_dims);
 
             let scores: Vec<f32> = vec![1.0, 2.0, 3.0, 4.0];
-            let new_networks: Vec<NeuralNetwork> = evolution::new_generation(&networks, &scores, mutation_rate);
+
+            let new_networks: Vec<NeuralNetwork> =
+                evolution::new_generation(&networks, &scores, mutation_rate);
 
             assert_eq!(total_networks, new_networks.len());
         }
