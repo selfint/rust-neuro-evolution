@@ -8,13 +8,13 @@ mod tests {
 
         #[test]
         fn neural_network_exists() {
-            let network_dims = vec![2, 3, 1];
+            let network_dims = [2, 3, 1];
             NeuralNetwork::new(&network_dims);
         }
 
         #[test]
         fn constructor_doesnt_consume_dims() {
-            let network_dims = vec![2, 3, 1];
+            let network_dims = [2, 3, 1];
             NeuralNetwork::new(&network_dims);
             NeuralNetwork::new(&network_dims);
         }
@@ -22,7 +22,7 @@ mod tests {
         #[test]
         #[should_panic(expected = "Neural network dims must have at least 2 layers, got 1 layers")]
         fn constructor_panics_on_not_enough_layers() {
-            let network_dims = vec![2];
+            let network_dims = [2];
             NeuralNetwork::new(&network_dims);
         }
 
@@ -31,22 +31,22 @@ mod tests {
             expected = "Given input has length 1, while network expects input with length 3"
         )]
         fn feed_forward_panics_on_wrong_input_size() {
-            let nn = NeuralNetwork::new(&vec![3, 10, 1]);
+            let nn = NeuralNetwork::new(&[3, 10, 1]);
 
-            nn.feed_forward(&vec![1.0]);
+            nn.feed_forward(&[1.0]);
         }
 
         #[test]
         fn feed_forward_gives_correct_output_length() {
-            let nn = NeuralNetwork::new(&vec![2, 1, 1]);
-            let output: Vec<f32> = nn.feed_forward(&vec![1.0, 0.0]);
+            let nn = NeuralNetwork::new(&[2, 1, 1]);
+            let output: Vec<f32> = nn.feed_forward(&[1.0, 0.0]);
 
             assert_eq!(1, output.len());
         }
 
         #[test]
         fn total_weights_is_correct() {
-            let nn = NeuralNetwork::new(&vec![2, 3, 1]);
+            let nn = NeuralNetwork::new(&[2, 3, 1]);
 
             assert_eq!(9, nn.total_weights());
         }
@@ -58,7 +58,7 @@ mod tests {
 
         #[test]
         fn mutate_changes_one_weight_or_bias() {
-            let mut nn = NeuralNetwork::new(&vec![2, 4, 3]);
+            let mut nn = NeuralNetwork::new(&[2, 4, 3]);
             let nn_weights = nn.weights.clone();
             let nn_biases = nn.biases.clone();
 
@@ -124,15 +124,15 @@ mod tests {
         #[test]
         #[should_panic(expected = "Can't crossover networks with different dimensions")]
         fn crossover_panics_on_network_dims_mismatch() {
-            let nn1 = NeuralNetwork::new(&vec![2, 3, 1]);
-            let nn2 = NeuralNetwork::new(&vec![1, 4, 2]);
+            let nn1 = NeuralNetwork::new(&[2, 3, 1]);
+            let nn2 = NeuralNetwork::new(&[1, 4, 2]);
 
             evolution::crossover(&nn1, &nn2);
         }
 
         #[test]
         fn crossover_uses_weights_and_biases_from_both_networks() {
-            let network_dims = vec![2, 3, 1];
+            let network_dims = [2, 3, 1];
             let nn1 = NeuralNetwork::new(&network_dims);
             let nn2 = NeuralNetwork::new(&network_dims);
 
@@ -165,7 +165,7 @@ mod tests {
 
         #[test]
         fn spawn_generation_is_correct_amount() {
-            let network_dims = vec![2, 3, 1];
+            let network_dims = [2, 3, 1];
             let total_networks: usize = 10;
             let networks: Vec<NeuralNetwork> =
                 evolution::spawn_generation(total_networks, &network_dims);
@@ -175,13 +175,13 @@ mod tests {
 
         #[test]
         fn new_generation_is_correct_amount() {
-            let network_dims = vec![2, 3, 1];
+            let network_dims = [2, 3, 1];
             let total_networks: usize = 4;
             let mutation_rate = 1.0;
             let networks: Vec<NeuralNetwork> =
                 evolution::spawn_generation(total_networks, &network_dims);
 
-            let scores: Vec<f32> = vec![1.0, 2.0, 3.0, 4.0];
+            let scores = [1.0, 2.0, 3.0, 4.0];
 
             let new_networks: Vec<NeuralNetwork> =
                 evolution::new_generation(&networks, &scores, mutation_rate);

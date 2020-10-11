@@ -90,7 +90,7 @@ fn crossover_weights(nn1: &NeuralNetwork, nn2: &NeuralNetwork) -> Vec<Vec<Vec<f3
     nn3_network_weights
 }
 
-pub fn spawn_generation(amount: usize, dims: &Vec<usize>) -> Vec<NeuralNetwork> {
+pub fn spawn_generation(amount: usize, dims: &[usize]) -> Vec<NeuralNetwork> {
     let mut generation = vec![];
 
     for _ in 0..amount {
@@ -100,7 +100,11 @@ pub fn spawn_generation(amount: usize, dims: &Vec<usize>) -> Vec<NeuralNetwork> 
     generation
 }
 
-pub fn new_generation(old_generation: &Vec<NeuralNetwork>, fitness_levels: &Vec<f32>, mutation_rate: f32) -> Vec<NeuralNetwork> {
+pub fn new_generation(
+    old_generation: &[NeuralNetwork],
+    fitness_levels: &[f32],
+    mutation_rate: f32,
+) -> Vec<NeuralNetwork> {
     let mut rng = rand::thread_rng();
     let mut gen = vec![];
 
@@ -126,4 +130,3 @@ pub fn new_generation(old_generation: &Vec<NeuralNetwork>, fitness_levels: &Vec<
 
     gen
 }
-
