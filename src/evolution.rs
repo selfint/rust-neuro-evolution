@@ -99,3 +99,31 @@ pub fn spawn_generation(amount: usize, dims: &Vec<usize>) -> Vec<NeuralNetwork> 
 
     generation
 }
+
+pub fn new_generation(old_generation: &Vec<NeuralNetwork>, fitness_levels: &Vec<f32>, mutation_rate: f32) -> Vec<NeuralNetwork> {
+    let mut rng = rand::thread_rng();
+    let mut gen = vec![];
+
+    let mut options: Vec<usize> = vec![];
+    for (i, &score) in fitness_levels.iter().enumerate() {
+        for _ in 0..score.round() as usize {
+            options.push(i);
+        }
+    }
+
+    for _ in 0..old_generation.len() {
+        let nn1 = &old_generation[options[rng.gen_range(0, options.len())]];
+        let nn2 = &old_generation[options[rng.gen_range(0, options.len())]];
+
+        let mut child = crossover(nn1, nn2);
+
+        if rng.gen_range(0.0, 1.0) < mutation_rate {
+            mutate(&mut child);
+        }
+
+        gen.push(child);
+    }
+
+    gen
+}
+
