@@ -133,6 +133,8 @@ pub fn new_generation(
     }
 
     // TODO: can we take ownership of survivors instead of cloning?
+    // Answer: we can, but cloning is useful since the old generation can be
+    // used after the new generation is created
     for _ in 0..total_survivors {
         gen.push(old_generation[options[rng.gen_range(0, options.len())]].clone());
     }
