@@ -1,4 +1,4 @@
-mod bounce {
+pub mod bounce {
     #[derive(Debug)]
     enum BounceTile {
         Empty,
