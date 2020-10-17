@@ -200,11 +200,11 @@ mod tests {
         }
 
         #[test]
-        fn new_generation_makes_new_networks() {
+        fn new_generation_makes_correct_amount_of_new_networks() {
             let network_dims = [2, 3, 1];
             let total_networks: usize = 4;
             let mutation_rate = 1.0;
-            let survival_rate = 0.0;
+            let survival_rate = 0.5;
             let networks: Vec<NeuralNetwork> =
                 evolution::spawn_generation(total_networks, &network_dims);
 
@@ -213,9 +213,9 @@ mod tests {
             let new_networks: Vec<NeuralNetwork> =
                 evolution::new_generation(&networks, &scores, mutation_rate, survival_rate);
 
-            let mut total_old_networks = 0;
-            for old_network in &networks {
-                for new_network in &new_networks {
+            let mut total_new_networks = new_networks.len();
+            for new_network in &new_networks {
+                for old_network in &networks {
                     let weight_diffs =
                         networks_weights_diff_count(&old_network.weights, &new_network.weights)
                             .unwrap();
@@ -223,16 +223,17 @@ mod tests {
                         networks_bias_diff_count(&old_network.biases, &new_network.biases).unwrap();
 
                     if weight_diffs + bias_diffs == 0 {
-                        total_old_networks += 1;
+                        total_new_networks -= 1;
+                        break;
                     }
                 }
             }
 
-            assert_eq!(0, total_old_networks);
+            assert_eq!(2, total_new_networks);
         }
 
         #[test]
-        fn correct_amount_of_networks_survives() {
+        fn new_generation_keeps_correct_amount_of_old_networks() {
             let network_dims = [2, 3, 1];
             let total_networks = 4;
             let mutation_rate = 1.0;
