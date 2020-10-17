@@ -267,10 +267,5 @@ mod tests {
 
     mod environment_integration_tests {
         use crate::environment::Bounce;
-
-        #[test]
-        fn test() {
-            println!("hello!");
-        }
     }
 }

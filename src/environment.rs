@@ -9,7 +9,7 @@ impl Bounce {
     }
 }
 
-#[cfg(tests)]
+#[cfg(test)]
 mod tests {
     use super::*;
 
