@@ -265,7 +265,5 @@ mod tests {
         }
     }
 
-    mod environment_integration_tests {
-        use crate::environment::Bounce;
-    }
+    mod environment_integration_tests {}
 }
