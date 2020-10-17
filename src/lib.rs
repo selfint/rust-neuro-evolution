@@ -1,3 +1,4 @@
+mod environment;
 mod evolution;
 mod neural_network;
 
@@ -261,6 +262,17 @@ mod tests {
             }
 
             assert_eq!(2, survivor_count);
+        }
+    }
+
+    mod environment_integration_tests {
+        use crate::environment::bounce::Bounce;
+        use crate::evolution;
+        use crate::neural_network::NeuralNetwork;
+
+        #[test]
+        fn bounce_has_constructor() {
+            Bounce::new();
         }
     }
 }
