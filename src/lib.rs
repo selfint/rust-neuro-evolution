@@ -13,7 +13,7 @@ mod tests {
         }
 
         #[test]
-        fn constructor_doesnt_consume_dims() {
+        fn constructor_borrows_dims() {
             let network_dims = [2, 3, 1];
             NeuralNetwork::new(&network_dims);
             NeuralNetwork::new(&network_dims);
