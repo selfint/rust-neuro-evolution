@@ -14,12 +14,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn bounce_generates_correct_world_size() {
+    fn bounce_sets_correct_width_and_height() {
         let board_width = 10;
         let board_height = 30;
-        let b1 = Bounce::new(board_height, board_width);
-        let b2 = Bounce::new(board_height, board_width);
+        let b1 = Bounce::new(board_width, board_height);
 
-        assert_eq!(board_width, b.width);
+        assert_eq!(board_width, b1.width);
+        assert_eq!(board_height, b1.height);
     }
 }
