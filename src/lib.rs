@@ -266,13 +266,11 @@ mod tests {
     }
 
     mod environment_integration_tests {
-        use crate::environment::bounce::Bounce;
-        use crate::evolution;
-        use crate::neural_network::NeuralNetwork;
+        use crate::environment::Bounce;
 
         #[test]
-        fn bounce_has_constructor() {
-            Bounce::new();
+        fn test() {
+            println!("hello!");
         }
     }
 }
