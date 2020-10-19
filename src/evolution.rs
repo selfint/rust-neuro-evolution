@@ -132,7 +132,7 @@ pub fn new_generation(
         gen.push(child);
     }
 
-    // TODO: can we take ownership of survivors instead of cloning?
+    // Question: can we take ownership of survivors instead of cloning?
     // Answer: we can, but cloning is useful since the old generation can be
     // used after the new generation is created
     for _ in 0..total_survivors {
