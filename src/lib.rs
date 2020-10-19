@@ -1,4 +1,4 @@
-mod environment;
+mod environments;
 mod evolution;
 mod neural_network;
 
@@ -264,6 +264,4 @@ mod tests {
             assert_eq!(2, survivor_count);
         }
     }
-
-    mod environment_integration_tests {}
 }
