@@ -2,6 +2,7 @@
 enum BounceTile {
     Empty,
     Ground,
+    Player,
 }
 
 pub struct Bounce {
@@ -22,12 +23,16 @@ impl Bounce {
     fn initialize_board(width: usize, height: usize) -> Vec<Vec<BounceTile>> {
         let mut board = vec![];
         let ground_height = height / 3;
+        let player_x = width / 2;
+        let player_y = ground_height - 1;
 
-        for _ in 0..width {
+        for w in 0..width {
             let mut row = vec![];
 
-            for i in 0..height {
-                if i == ground_height {
+            for h in 0..height {
+                if h == player_y && w == player_x {
+                    row.push(BounceTile::Player);
+                } else if h == ground_height {
                     row.push(BounceTile::Ground);
                 } else {
                     row.push(BounceTile::Empty)
@@ -96,5 +101,23 @@ mod tests {
                 assert!(matches!(tile, BounceTile::Empty));
             }
         }
+    }
+
+    #[test]
+    fn bounce_generates_player() {
+        let board_width = 10;
+        let board_height = 30;
+        let b = Bounce::new(board_width, board_height);
+
+        let mut player_exists = false;
+        for tile_col in b.board {
+            for tile in tile_col {
+                if let BounceTile::Player = tile {
+                    player_exists = true
+                }
+            }
+        }
+
+        assert!(player_exists);
     }
 }
