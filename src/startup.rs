@@ -15,7 +15,9 @@ struct World {
 
 impl World {
     fn new() -> Self {
-        World {floor: Floor::new()}
+        World {
+            floor: Floor::new(),
+        }
     }
 }
 
