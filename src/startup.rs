@@ -12,13 +12,13 @@ impl Floor {
 }
 
 #[derive(Bundle)]
-struct World {
+struct WorldBundle {
     floor: Floor,
 }
 
-impl World {
+impl WorldBundle {
     fn new(floor_height: f32) -> Self {
-        World {
+        WorldBundle {
             floor: Floor::new(floor_height),
         }
     }
@@ -32,5 +32,5 @@ impl Plugin for StartupPlugin {
 
 fn startup_world(mut cmd: Commands) {
     println!("Starting world");
-    cmd.spawn(World::new(5.0));
+    cmd.spawn(WorldBundle::new(5.0));
 }
