@@ -1,10 +1,13 @@
 use bevy::prelude::*;
 
 pub struct StartupPlugin;
-struct Floor;
+struct Floor {
+    height: f32,
+}
+
 impl Floor {
-    fn new() -> Self {
-        Floor {}
+    fn new(height: f32) -> Self {
+        Floor { height }
     }
 }
 
@@ -14,9 +17,9 @@ struct World {
 }
 
 impl World {
-    fn new() -> Self {
+    fn new(floor_height: f32) -> Self {
         World {
-            floor: Floor::new(),
+            floor: Floor::new(floor_height),
         }
     }
 }
@@ -29,5 +32,5 @@ impl Plugin for StartupPlugin {
 
 fn startup_world(mut cmd: Commands) {
     println!("Starting world");
-    cmd.spawn(World::new());
+    cmd.spawn(World::new(5.0));
 }
