@@ -1,5 +1,8 @@
-mod world;
+mod startup;
+use startup::StartupPlugin;
+
+use bevy::prelude::*;
 
 fn main() {
-    println!("Hello World!");
+    App::build().add_plugin(StartupPlugin).run();
 }
