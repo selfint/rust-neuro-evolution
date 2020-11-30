@@ -1,15 +1,15 @@
 use bevy::{prelude::*, render::camera::Camera};
 
-pub struct StartupPlugin;
+pub struct VisualizationPlugin;
 
-impl Plugin for StartupPlugin {
+impl Plugin for VisualizationPlugin {
     fn build(&self, app: &mut AppBuilder) {
-        app.add_startup_system(startup_system.system())
-            .add_system(camera_rotater_system.system());
+        app.add_startup_system(visualization_startup_system.system())
+            .add_system(camera_rotator_system.system());
     }
 }
 
-fn startup_system(mut commands: Commands) {
+fn visualization_startup_system(mut commands: Commands) {
     commands
         // Camera
         .spawn(Camera3dComponents {
@@ -26,7 +26,7 @@ fn startup_system(mut commands: Commands) {
         });
 }
 
-fn camera_rotater_system(mut query: Query<(&Camera, &mut Transform)>) {
+fn camera_rotator_system(mut query: Query<(&Camera, &mut Transform)>) {
     for (_camera, mut transform) in query.iter_mut() {
         transform.rotate(Quat::from_rotation_y(0.01));
     }
