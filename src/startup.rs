@@ -10,10 +10,11 @@ impl Plugin for StartupPlugin {
 
 fn startup_system(mut commands: Commands) {
     commands
+        // Camera
         .spawn(Camera3dComponents {
             transform: Transform::from_matrix(Mat4::from_rotation_translation(
-                Quat::from_xyzw(-0.3, -0.5, -0.3, 0.5).normalize(),
-                Vec3::new(-7.0, 20.0, 4.0),
+                Quat::from_xyzw(0., 90., 0., 0.).normalize(),
+                Vec3::new(0.0, 1.0, 0.0),
             )),
             ..Default::default()
         })
