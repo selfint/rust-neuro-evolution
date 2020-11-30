@@ -14,7 +14,7 @@ fn visualization_startup_system(mut commands: Commands) {
         // Camera
         .spawn(Camera3dComponents {
             transform: Transform::from_matrix(Mat4::from_rotation_translation(
-                Quat::from_xyzw(0., -90., 0., 0.).normalize(),
+                Quat::from_xyzw(0., 90., 0., 0.).normalize(),
                 Vec3::new(0.0, 1.0, -3.0),
             )),
             ..Default::default()
