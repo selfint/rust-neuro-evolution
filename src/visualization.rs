@@ -1,4 +1,5 @@
-use bevy::{prelude::*, render::camera::Camera};
+use bevy::prelude::*;
+use bevy::render::camera::Camera;
 
 pub struct VisualizationPlugin;
 
@@ -13,10 +14,7 @@ fn visualization_startup_system(mut commands: Commands) {
     commands
         // Camera
         .spawn(Camera3dComponents {
-            transform: Transform::from_matrix(Mat4::from_rotation_translation(
-                Quat::from_xyzw(0., 90., 0., 0.).normalize(),
-                Vec3::new(0.0, 1.0, -3.0),
-            )),
+            transform: Transform::from_translation(Vec3::new(-50., 50., -50.)),
             ..Default::default()
         })
         // Light
@@ -28,6 +26,7 @@ fn visualization_startup_system(mut commands: Commands) {
 
 fn camera_rotator_system(mut query: Query<(&Camera, &mut Transform)>) {
     for (_camera, mut transform) in query.iter_mut() {
-        transform.rotate(Quat::from_rotation_y(0.01));
+        // TODO: move camera around 0,0,0
+        transform.look_at(Vec3::zero(), Vec3::new(0., 1., 0.));
     }
 }
