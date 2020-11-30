@@ -19,7 +19,7 @@ fn visualization_startup_system(mut commands: Commands) {
         })
         // Light
         .spawn(LightComponents {
-            transform: Transform::from_translation(Vec3::new(4.0, 8.0, 4.0)),
+            transform: Transform::from_translation(Vec3::new(-40.0, 80.0, 30.0)),
             ..Default::default()
         });
 }
