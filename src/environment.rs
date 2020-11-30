@@ -21,8 +21,8 @@ fn environment_startup_system(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    let ground_mesh = meshes.add(Mesh::from(shape::Plane { size: 10. }));
-    let ground_mat = materials.add(Color::rgb(0., 1., 0.).into());
+    let ground_mesh = meshes.add(Mesh::from(shape::Plane { size: 50. }));
+    let ground_mat = materials.add(Color::rgb(0.1, 1., 0.).into());
 
     commands
         .spawn(GroundBundle {
