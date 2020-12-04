@@ -1,11 +1,11 @@
 use bevy::prelude::*;
+use bevy_rapier3d::rapier::{dynamics::RigidBodyBuilder, geometry::ColliderBuilder};
 
-struct Ground;
+pub struct Ground;
 
 #[derive(Bundle)]
 struct GroundBundle {
     ground: Ground,
-    transform: Transform,
 }
 
 pub struct EnvironmentPlugin;
@@ -25,10 +25,9 @@ fn environment_startup_system(
     let ground_mat = materials.add(Color::rgb(0.1, 1., 0.).into());
 
     commands
-        .spawn(GroundBundle {
-            ground: Ground,
-            transform: Transform::from_translation(Vec3::zero()),
-        })
+        .spawn(GroundBundle { ground: Ground })
+        .with(RigidBodyBuilder::new_static().translation(0.0, 0.0, 0.0))
+        .with(ColliderBuilder::cuboid(50.0, 1.0, 50.0))
         .with_bundle(PbrComponents {
             mesh: ground_mesh,
             material: ground_mat,

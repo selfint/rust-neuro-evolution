@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 bevy = "0.3.0"
+bevy_rapier3d = "0.6.2"
