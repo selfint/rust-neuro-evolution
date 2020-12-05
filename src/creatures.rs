@@ -2,7 +2,6 @@ use bevy::prelude::*;
 use bevy_rapier3d::rapier::{
     dynamics::{RigidBody, RigidBodyBuilder},
     geometry::ColliderBuilder,
-    na::Matrix,
 };
 
 pub struct Creature;
@@ -24,8 +23,6 @@ impl Plugin for CreaturesPlugin {
 fn move_system(mut query: Query<(&Creature, &Transform, &mut RigidBody)>) {
     for (_c, transform, mut rb) in query.iter_mut() {
         let forward = transform.forward();
-        let var_name: Vec<f32> = vec![forward.x(), forward.y(), forward.z()];
-        rb.set_linvel(var_name, true);
     }
 }
 
