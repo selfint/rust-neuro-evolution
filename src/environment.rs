@@ -1,8 +1,9 @@
 use bevy::prelude::*;
 use bevy_rapier3d::rapier::{dynamics::RigidBodyBuilder, geometry::ColliderBuilder};
 
+use crate::Constants;
+
 pub struct Ground;
-pub const ENVIRONMENT_SIZE: f32 = 50.0;
 
 #[derive(Bundle)]
 struct GroundBundle {
@@ -20,11 +21,12 @@ impl Plugin for EnvironmentPlugin {
 
 fn environment_startup_system(
     mut commands: Commands,
+    constants: Res<Constants>,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     let ground_mesh = meshes.add(Mesh::from(shape::Plane {
-        size: ENVIRONMENT_SIZE,
+        size: constants.environment_size,
     }));
     let ground_mat = materials.add(Color::rgb(0.1, 1., 0.).into());
 
@@ -32,9 +34,9 @@ fn environment_startup_system(
         .spawn(GroundBundle { ground: Ground })
         .with(RigidBodyBuilder::new_static().translation(0.0, 0.0, 0.0))
         .with(ColliderBuilder::cuboid(
-            ENVIRONMENT_SIZE,
+            constants.environment_size,
             0.,
-            ENVIRONMENT_SIZE,
+            constants.environment_size,
         ))
         .with_bundle(PbrComponents {
             mesh: ground_mesh,
@@ -43,20 +45,20 @@ fn environment_startup_system(
         });
 }
 
-fn clamp_system(mut query: Query<&mut Transform>) {
+fn clamp_system(constants: Res<Constants>, mut query: Query<&mut Transform>) {
     for mut transform in query.iter_mut() {
         let entity_x = transform.translation.x();
         let entity_y = transform.translation.y();
-        if entity_x.abs() > ENVIRONMENT_SIZE {
+        if entity_x.abs() > constants.environment_size {
             match entity_x > 0. {
-                true => transform.translation.set_x(ENVIRONMENT_SIZE),
-                false => transform.translation.set_x(-ENVIRONMENT_SIZE),
+                true => transform.translation.set_x(constants.environment_size),
+                false => transform.translation.set_x(-constants.environment_size),
             }
         }
-        if entity_y.abs() > ENVIRONMENT_SIZE {
+        if entity_y.abs() > constants.environment_size {
             match entity_y > 0. {
-                true => transform.translation.set_y(ENVIRONMENT_SIZE),
-                false => transform.translation.set_y(-ENVIRONMENT_SIZE),
+                true => transform.translation.set_y(constants.environment_size),
+                false => transform.translation.set_y(-constants.environment_size),
             }
         }
     }
