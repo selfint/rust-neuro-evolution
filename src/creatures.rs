@@ -1,7 +1,9 @@
 use bevy::prelude::*;
+use bevy_rapier3d::physics::RigidBodyHandleComponent;
 use bevy_rapier3d::rapier::{
-    dynamics::{RigidBody, RigidBodyBuilder},
+    dynamics::{RigidBodyBuilder, RigidBodySet},
     geometry::ColliderBuilder,
+    math::Vector,
 };
 
 pub struct Creature;
@@ -20,9 +22,15 @@ impl Plugin for CreaturesPlugin {
     }
 }
 
-fn move_system(mut query: Query<(&Creature, &Transform, &mut RigidBody)>) {
-    for (_c, transform, mut rb) in query.iter_mut() {
-        let forward = transform.forward();
+fn move_system(
+    mut rigid_bodies: ResMut<RigidBodySet>,
+    query: Query<(&Creature, &Transform, &RigidBodyHandleComponent)>,
+) {
+    for (_c, transform, handle) in query.iter() {
+        if let Some(rb) = rigid_bodies.get_mut(handle.handle()) {
+            let forward = transform.forward() * 10.;
+            rb.apply_force(Vector::new(forward.x(), forward.y(), forward.z()), true);
+        }
     }
 }
 
