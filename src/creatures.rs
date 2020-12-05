@@ -1,6 +1,9 @@
 use bevy::prelude::*;
-use bevy_rapier3d::rapier::dynamics::RigidBodyBuilder;
-use bevy_rapier3d::rapier::geometry::ColliderBuilder;
+use bevy_rapier3d::rapier::{
+    dynamics::{RigidBody, RigidBodyBuilder},
+    geometry::ColliderBuilder,
+    na::Matrix,
+};
 
 pub struct Creature;
 
@@ -13,7 +16,16 @@ pub struct CreaturesPlugin;
 
 impl Plugin for CreaturesPlugin {
     fn build(&self, app: &mut AppBuilder) {
-        app.add_startup_system(creature_startup_system.system());
+        app.add_startup_system(creature_startup_system.system())
+            .add_system(move_system.system());
+    }
+}
+
+fn move_system(mut query: Query<(&Creature, &Transform, &mut RigidBody)>) {
+    for (_c, transform, mut rb) in query.iter_mut() {
+        let forward = transform.forward();
+        let var_name: Vec<f32> = vec![forward.x(), forward.y(), forward.z()];
+        rb.set_linvel(var_name, true);
     }
 }
 
