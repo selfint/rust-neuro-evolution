@@ -26,7 +26,7 @@ fn environment_startup_system(
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     let ground_mesh = meshes.add(Mesh::from(shape::Plane {
-        size: constants.environment_size,
+        size: constants.environment_size * 2.,
     }));
     let ground_mat = materials.add(Color::rgb(0.1, 1., 0.).into());
 
