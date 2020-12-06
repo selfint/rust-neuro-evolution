@@ -16,7 +16,6 @@ use bevy_rapier3d::physics::RapierPhysicsPlugin;
 struct Constants {
     environment_size: f32,
     initial_creatures: u32,
-    max_creatures: u32,
     food_spawners: u32,
 }
 
@@ -32,7 +31,6 @@ fn main() {
         .add_resource(Constants {
             environment_size: 50.,
             initial_creatures: 10,
-            max_creatures: 50,
             food_spawners: 3,
         })
         .add_plugins(DefaultPlugins)
