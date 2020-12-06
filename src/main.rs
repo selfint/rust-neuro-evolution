@@ -7,6 +7,9 @@ use environment::EnvironmentPlugin;
 mod creatures;
 use creatures::CreaturesPlugin;
 
+mod food;
+use food::FoodPlugin;
+
 use bevy::prelude::*;
 use bevy_rapier3d::physics::RapierPhysicsPlugin;
 
@@ -14,6 +17,7 @@ struct Constants {
     environment_size: f32,
     initial_creatures: u32,
     max_creatures: u32,
+    food_spawners: u32,
 }
 
 fn main() {
@@ -29,11 +33,13 @@ fn main() {
             environment_size: 50.,
             initial_creatures: 10,
             max_creatures: 50,
+            food_spawners: 3,
         })
         .add_plugins(DefaultPlugins)
         .add_plugin(RapierPhysicsPlugin)
         .add_plugin(VisualizationPlugin)
         .add_plugin(EnvironmentPlugin)
         .add_plugin(CreaturesPlugin)
+        .add_plugin(FoodPlugin)
         .run();
 }
