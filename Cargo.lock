@@ -419,6 +419,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "bevy_fly_camera"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "43dd02d099e94b967ae121c6eadd3a21496ee11def3d73a57f77e42abf287f82"
+dependencies = [
+ "bevy",
+]
+
+[[package]]
 name = "bevy_gilrs"
 version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2489,6 +2498,7 @@ name = "neuro-evolution"
 version = "0.1.0"
 dependencies = [
  "bevy",
+ "bevy_fly_camera",
  "bevy_rapier3d",
  "rand",
 ]
