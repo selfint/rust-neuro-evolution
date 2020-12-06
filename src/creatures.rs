@@ -64,7 +64,7 @@ fn spawn_creature(
 ) {
     let mut rng = rand::thread_rng();
     let x = rng.gen_range(-environment_size, environment_size);
-    let y = 0.5;
+    let y = 1.;
     let z = rng.gen_range(-environment_size, environment_size);
     commands
         .spawn(CreatureBundle { creature: Creature })
