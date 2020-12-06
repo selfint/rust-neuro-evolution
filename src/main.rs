@@ -40,6 +40,8 @@ fn main() {
         .add_plugin(VisualizationPlugin)
         .add_plugin(EnvironmentPlugin)
         .add_plugin(CreaturesPlugin)
-        .add_plugin(FoodPlugin)
+        .add_plugin(FoodPlugin {
+            food_spawn_rate: 1.,
+        })
         .run();
 }
